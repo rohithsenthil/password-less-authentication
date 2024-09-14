@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendHeaven</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to right, #f5af19, #f12711);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: #1d1f21;
+            color: white;
+            padding: 20px 20px;
+            text-align: left;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            font-weight: 300;
+            color: #f39c12;
+        }
+        .navbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.1em;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .product {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .product::before {
+            content: 'NEW';
+            position: absolute;
+            top: 15px;
+            left: -15px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 20px;
+            transform: rotate(-45deg);
+            font-weight: bold;
+        }
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .product h2 {
+            font-size: 1.8em;
+            margin: 20px 0;
+            color: #34495e;
+        }
+        .product .price {
+            font-size: 1.5em;
+            color: #e74c3c;
+            margin: 10px 0;
+        }
+        .product .rating {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #f1c40f;
+        }
+        .product .colors {
+            margin: 20px 0;
+        }
+        .product .colors span {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .product .colors span:hover {
+            transform: scale(1.2);
+        }
+        .product .actions {
+            margin-top: 20px;
+        }
+        .product .actions button {
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .product .actions button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ff6347, #1e90ff);
+        }
+        footer {
+            background-color: #1d1f21;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+        .logout-button {
+            display: inline-block;
+            padding: 7px 7px;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.5em;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+        .login-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0d980aad;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #3b650ede;
+        }
+        .update-profile-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .update-profile-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <% if (email && !profileCompleted) { %>
+        <div id="updateProfilePopup" class="popup active">
+            <h1>Your profile is incomplete. Redirecting to <a href="/complete-profile">update your profile</a>...</h1>
+        </div>
+    <% } %>
+    <header>
+        <h1>TrendHeaven</h1>
+        <p>Discover the latest trends and exclusive offers</p>
+        <div class="navbar">
+            <% if (email) { %>
+                          
+                <!-- User is logged in -->
+                <p id="email99" style="color: rgb(77, 206, 116);">
+                    <% if (name) { %>
+                        Welcome, <%= name %>!
+                    <% } else { %>
+                        Welcome, <%= email %>!
+                    <% } %>
+                </p>
+                <a href="/cart" class="cart-icon">🛒 Cart</a>
+                <a href="/my-orders" class="cart-icon">📦 Orders</a>
+                <a href="/auth/logout" class="logout-button">Logout</a>
+            <% } else { %>
+                <!-- User is not logged in -->
+                <a href="/auth/login" class="login-button">Login</a>
+            <% } %>
+        </div>
+        <% if (success) { %>
+            <div class="notification">
+                <p><%= success %></p>
+            </div>
+        <% } %>
+    </header>
+    <div class="container">
+        <div class="product-grid">
+            <% products.forEach(product => { %>
+                <div class="product">
+                    
+                        <img src="<%= product.image %>" alt="Product Image">
+                    
+                    <h2><%= product.name %></h2>+66
+                    <p class="price">Rs.<%= product.price %>.00</p>
+                    <div class="rating">
+                        <span><%= product.rating %></span> (250 reviews)
+                    </div>
+                    <div class="colors">
+                        <% product.colors.forEach(color => { %>
+                            <span style="background-color: <%= color %>;"></span>
+                        <% }) %>
+                    </div>
+                    <p><%= product.offer %></p>
+                    <div class="actions">
+                        <form action="/cart/add" method="POST" style="display: inline;">
+                            <input type="hidden" name="productId" value="<%= product._id %>">
+                            <button type="submit">🛒 Add to Cart</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 TrendHeaven. All rights reserved.</p>
+    </footer>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const profilePopup = document.getElementById('updateProfilePopup');
+            if (profilePopup && profilePopup.classList.contains('active')) {
+                // Automatically redirect after a short delay
+                setTimeout(() => {
+                    window.location.href = '/complete-profile';
+                }, 500); // Adjust delay as needed
+            }
+        });
+    </script>   
+</body>
+</html>

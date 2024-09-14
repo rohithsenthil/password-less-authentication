@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #f5af19, #f12711);
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            overflow-y: scroll;
+            padding: 40px;
+        }
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            margin: 80px auto;
+        }
+        .login-container h1 {
+            font-size: 2.4em;
+            color: #1d1f21;
+            font-weight: bold;
+        }
+        .login-container p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        .login-container label {
+            display: block;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+        .login-container input {
+            width: calc(100% - 20px);
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .login-container button {
+            width: calc(100% - 20px);
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+        }
+        .login-container button:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        .message {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        .message.error {
+            color: red;
+        }
+        .message.success {
+            color: green;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .popup.active {
+            display: block;
+        }
+        .popup button {
+            background: #1e90ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Complete Your Profile</h1>
+        <form action="/complete-profile" method="POST">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="address1">Address Line 1</label>
+            <input type="text" id="address1" name="address1" placeholder="Street address, P.O. box, etc." required>
+            
+            <label for="address2">Address Line 2 (Optional)</label>
+            <input type="text" id="address2" name="address2" placeholder="Apartment, suite, unit, building, floor, etc.">
+            
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" required>
+            
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" required>
+            
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" required>
+            
+            <label for="pincode">Pincode</label>
+            <input type="text" id="pincode" name="pincode" pattern="\d{6}" title="Pincode must be 6 digits" required>
+            
+            <label for="phone">Phone Number (Country Code +10 digits)</label>
+            <input type="tel" id="phone" name="phone" pattern="\+\d{1,3}\d{10}" title="Phone number must include country code and be followed by 10 digits" required>
+            
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+</body>
+</html>

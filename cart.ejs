@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - TrendHeaven</title>
+    <style>
+        /* Existing styles */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to right, #f5af19, #f12711);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: #1d1f21;
+            color: white;
+            padding: 20px 20px;
+            text-align: left;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            font-weight: 300;
+            color: #f39c12;
+        }
+        .navbar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 1.1em;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .cart-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid #ccc;
+        }
+        .cart-item img {
+            max-width: auto;
+            height: 200px;
+            border-radius: 10px;
+        }
+        .cart-item-details {
+            flex: 1;
+            margin-left: 20px;
+        }
+        .cart-item h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: #34495e;
+        }
+        .cart-item .price {
+            font-size: 1.2em;
+            color: #000000;
+        }
+        .cart-item .quantity {
+            font-size: 1.2em;
+            color: #555;
+        }
+        .cart-item .actions {
+            display: flex;
+            align-items: center;
+        }
+        .cart-item .actions form {
+            display: inline;
+        }
+        .cart-item .actions button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .cart-item .actions button:hover {
+            background-color: #2980b9;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #c0392b;
+        }
+        .checkout-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .checkout-button:hover {
+            background-color: #2980b9;
+        }
+
+        .inc-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .inc-button:hover {
+            background-color: #2980b9;
+        }
+        .remov-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        .remov-button:hover {
+            background-color: #c0392b;
+        }
+        .cart-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            margin-top: 50px;
+            text-align: left;
+            color: #333;
+        }
+        .logout-button {
+            display: inline-block;
+            padding: 7px 7px;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.5em;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TrendHeaven</h1>
+        <p>Discover the latest trends and exclusive offers</p>
+        <div class="navbar">
+            <% if (user.email) { %>
+                          
+                <!-- User is logged in -->
+                <p id="email99" style="color: rgb(77, 206, 116);">
+                    <% if (user.name) { %>
+                        Welcome, <%= user.name %>!
+                    <% } else { %>
+                        Welcome, <%= user.email %>!
+                    <% } %>
+                </p>
+                <a href="/cart" class="cart-icon">🛒 Cart</a>
+                <a href="/auth/logout" class="logout-button">Logout</a>
+            <% } else { %>
+                <!-- User is not logged in -->
+                <a href="/auth/login" class="login-button">Login</a>
+            <% } %>
+        </div>
+    </header>
+    
+    <div class="cart-container">
+        <a href="/" class="back-button">Back to Shop</a>
+        <% if (cartItems.length > 0) { %>
+            <% cartItems.forEach(item => { %>
+                <div class="cart-item">
+                    <img src="<%= item.product.image %>" alt="Product Image">
+                    <div class="cart-item-details">
+                        <h2><%= item.product.name %></h2>
+                        <p class="price">Rs.<%= item.product.price %>.00</p>
+                        <p class="quantity">
+                            Quantity: 
+                            <form action="/cart/update" method="POST" style="display: inline;">
+                                <input type="hidden" name="productId" value="<%= item.product._id %>">
+                                <button class="inc-button" type="submit" name="action" value="decrease">-</button>
+                                <span><%= item.quantity %></span>
+                                <button class="inc-button" type="submit" name="action" value="increase">+</button>
+                            </form>
+                        </p>
+                        <form action="/cart/remove" method="POST" style="display: inline;">
+                            <input type="hidden" name="productId" value="<%= item.product._id %>">
+                            <button  type="submit" class="remov-button">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+            <div class="cart-total">
+                <b>Total: Rs.<%= cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0) %>.00 </b>
+                <a href="/checkout" class="checkout-button">Checkout</a>
+            </div>
+        <% } else { %>
+            <p>Your cart is empty.</p>
+        <% } %>
+    </div>
+</body>
+</html>

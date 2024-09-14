@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TrendHeaven</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #f5af19, #f12711);
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            overflow-y: scroll;
+            padding: 40px;
+        }
+        .login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin: 80px auto;
+        }
+        .login-container h1 {
+            font-size: 2.4em;
+            color: #1d1f21;
+            font-weight: bold;
+        }
+        .login-container p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        .login-container label {
+            display: block;
+            font-weight: bold;
+            margin: 10px 0 5px;
+            text-align: left;
+        }
+        .login-container input {
+            width: calc(100% - 20px);
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .login-container button {
+            width: calc(100% - 20px);
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+        }
+        .login-container button:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        .message {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        .message.error {
+            color: red;
+        }
+        .message.success {
+            color: green;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .popup.active {
+            display: block;
+        }
+        .popup button {
+            background: #1e90ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            opacity: 0.8;
+        }
+        .loading {
+            display: none;
+            margin: 10px auto;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ddd;
+            border-top: 5px solid #1e90ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login with OTP</h1>
+        <form id="otpForm">
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <button type="button" id="otpButton" onclick="sendOtp()">Send OTP</button>
+            <div id="message" class="message"></div>
+            <div id="loading" class="loading"></div>
+        </form>
+        
+        <!-- OTP Input is initially hidden -->
+        <form id="verifyOtpForm" style="display: none;">
+            <input type="text" id="otp" name="otp" placeholder="Enter Your OTP" maxlength="6">
+            <button type="button"  onclick="verifyOtp()">Verify OTP</button>
+            <div id="message" class="message"></div>
+        </form>
+
+    </div>
+
+    <script>
+        async function sendOtp() {
+            const email = document.getElementById('email').value;
+            const messageDiv = document.getElementById('message');
+            const verifyOtpForm = document.getElementById('verifyOtpForm');
+            const otpButton = document.getElementById('otpButton');
+            const loadingDiv = document.getElementById('loading');
+
+            otpButton.disabled = true; // Disable button to prevent multiple clicks
+            loadingDiv.style.display = 'block'; // Show loading animation
+
+            try {
+                const response = await fetch('/auth/send-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    messageDiv.className = 'message success';
+                    messageDiv.textContent = 'OTP sent. Please check your email.';
+                    verifyOtpForm.style.display = 'block'; // Show the OTP form
+                    otpButton.textContent = 'Resend OTP'; 
+                } else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = result.error || 'Error sending OTP';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'Error sending OTP';
+            } finally {
+                otpButton.disabled = false; // Re-enable the button
+                loadingDiv.style.display = 'none'; // Hide loading animation
+            }
+        }
+
+        async function verifyOtp() {
+            const email = document.getElementById('email').value;
+            const otp = document.getElementById('otp').value;
+            const messageDiv = document.getElementById('message');
+            const newUserForm = document.getElementById('newUserForm');
+
+            try {
+                const response = await fetch('/auth/verify-otp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, otp}) // Ensure the token is included
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+
+                        messageDiv.className = 'message success';
+                        messageDiv.textContent = 'Logged in, redirecting...';
+                        setTimeout(() => {
+                            window.location.href = '/'; // Redirect to the home page or another page
+                        }, 1000);
+                    
+                } 
+                else {
+                    messageDiv.className = 'message error';
+                    messageDiv.textContent = result.error || 'Invalid OTP';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.className = 'message error';
+                messageDiv.textContent = 'Invalid OTP';
+            }
+        }
+
+    </script>
+</body>
+</html>

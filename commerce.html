@@ -1,0 +1,279 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendHeaven</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to right, #f5af19, #f12711);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #1d1f21;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            font-weight: 300;
+            color: #f39c12;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .product {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .product::before {
+            content: 'NEW';
+            position: absolute;
+            top: 15px;
+            left: -15px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 20px;
+            transform: rotate(-45deg);
+            font-weight: bold;
+        }
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .product h2 {
+            font-size: 1.8em;
+            margin: 20px 0;
+            color: #34495e;
+        }
+        .product .price {
+            font-size: 1.5em;
+            color: #e74c3c;
+            margin: 10px 0;
+        }
+        .product .rating {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #f1c40f;
+        }
+        .product .colors {
+            margin: 20px 0;
+        }
+        .product .colors span {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .product .colors span:hover {
+            transform: scale(1.2);
+        }
+        .product .actions {
+            margin-top: 20px;
+        }
+        .product .actions button {
+            background: linear-gradient(135deg, #1e90ff, #ff6347);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .product .actions button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #ff6347, #1e90ff);
+        }
+        footer {
+            background-color: #1d1f21;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TrendHeaven</h1>
+        <p>Discover the latest trends and exclusive offers</p>
+        <p><strong>Product Amount:</strong> Rs.<span id="product-amount"></span></p>
+    </header>
+    <div class="container">
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product">
+                <a href="order.html">
+                    <img src="saree3.avif" alt="Product Image">
+                </a>
+                
+                <h2>Saree</h2>
+                <p class="price">Rs.699.00</p>
+                <div class="rating">
+                    <span>&#9733;&#9733;&#9733;&#9733;&#9734;</span> (250 reviews)
+                </div>
+                <div class="colors">
+                    <span style="background-color: #e74c3c;"></span>
+                    <span style="background-color: #3498db;"></span>
+                    <span style="background-color: #2ecc71;"></span>
+                </div>
+                <p>Limited time offer: Save 20%!</p>
+                <div class="actions">
+                    <button>❤ Like</button>
+                    <button>🛒 Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="product">
+                <a href="order.html">
+                    <img src="mens jacket.1.jpg" alt="mens jacket.2.jpg" WIDTH="300PX" hight="300PX">
+                </a>
+                
+                <h2>Stylish Jacket</h2>
+                <p class="price">Rs.400</p>
+                <div class="rating">
+                    <span>&#9733;&#9733;&#9733;&#9733;&#9734;</span> (180 reviews)
+                </div>
+                <div class="colors">
+                    <span style="background-color: #34495e;"></span>
+                    <span style="background-color: #95a5a6;"></span>
+                </div>
+                <p>Special Offer: Buy 2 Get 1 Free!</p>
+                <div class="actions">
+                    <button>❤ Like</button>
+                    <button>🛒 Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="product">
+                <a href="order.html">
+                    <img src="tops.1.jpg" alt="Product Image">
+                </a>
+                
+                <h2>Trendy Tops</h2>
+                <p class="price">Rs.320</p>
+                <div class="rating">
+                    <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span> (300 reviews)
+                </div>
+                <div class="colors">
+                    <span style="background-color: #9b59b6;"></span>
+                    <span style="background-color: #8e44ad;"></span>
+                </div>
+                <p>Exclusive Discount: 30% Off!</p>
+                <div class="actions">
+                    <button>❤ Like</button>
+                    <button>🛒 Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 4 -->
+            <div class="product">
+                <a href="order.html">
+                    <img src="causal shirts.1.webp" alt="Product Image">
+                </a>
+                
+                <h2>Casual Shirt</h2>
+                <p class="price">Rs.299.00</p>
+                <div class="rating">
+                    <span>&#9733;&#9733;&#9733;&#9733;&#9734;</span> (150 reviews)
+                </div>
+                <div class="colors">
+                    <span style="background-color: #1abc9c;"></span>
+                    <span style="background-color: #16a085;"></span>
+                </div>
+                <p>Discount: 10% Off!</p>
+                <div class="actions">
+                    <button>❤ Like</button>
+                    <button>🛒 Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 5 -->
+            <div class="product">
+                <a href="order.html">
+                    <img src="jeans.1..jpeg" alt="Product Image">
+                </a>
+                
+                <h2>Trendy Jeans</h2>
+                <p class="price">Rs.499.00</p>
+                <div class="rating">
+                    <span>&#9733;&#9733;&#9733;&#9733;&#9734;</span> (200 reviews)
+                </div>
+                <div class="colors">
+                    <span style="background-color: #2980b9;"></span>
+                    <span style="background-color: #3498db;"></span>
+                </div>
+                <p>Buy 1 Get 1 Free!</p>
+                <div class="actions">
+                    <button>❤ Like</button>
+                    <button>🛒 Add to Cart</button>
+                </div>
+            </div>
+            <!-- Product 6 -->
+            <div class="product">
+                <a href="order.html">
+                <img src="sunglasses.1..webp" alt="Product Image">
+            </a>
+            
+                <h2>Modern Sunglasses</h2>
+                <p class="price">Rs.89.00</p>
+                <div class="rating">
+                    <span>&#9733;&#9733;&#9733;&#9733;&#9734;</span> (180 reviews)
+                </div>
+                <div class="colors">
+                    <span style="background-color: #34495e;"></span>
+                    <span style="background-color: #95a5a6;"></span>
+                </div>
+                <p>Special Offer: Buy 2 Get 1 Free!</p>
+                <div class="actions">
+                    <button>❤ Like</button>
+                    <button>🛒 Add to Cart</button>
+                </div>
+            </div>
+</div>
+</div>
+<script>
+    // Simulating setting the amount dynamically
+    document.addEventListener('DOMContentLoaded', function() {
+        const productAmount =price ; // This should be set dynamically based on the selected product
+        document.getElementById('product-amount').textContent = productAmount.toFixed(2);
+    });
+</script>
+</body>
